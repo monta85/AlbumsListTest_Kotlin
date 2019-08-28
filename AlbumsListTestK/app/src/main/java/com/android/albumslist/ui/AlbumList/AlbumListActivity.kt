@@ -5,9 +5,10 @@ import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.android.albumslist.Adapter.AlbumAdapter
 import com.android.albumslist.InjectionAlbum
 import com.android.albumslist.R
-import com.android.albumslist.model.Album
+import com.android.albumslist.model.Photo
 import kotlinx.android.synthetic.main.activity_album_list.*
 
 class AlbumListActivity : AppCompatActivity() {
@@ -33,7 +34,7 @@ class AlbumListActivity : AppCompatActivity() {
         /**
          * Observe changes in the list of album
          */
-        viewModelAlbumList.albumsList.observe(this, Observer<List<Album>> {
+        viewModelAlbumList.photoList.observe(this, Observer<List<Photo>> {
             adapter.submitList(it)
         })
     }

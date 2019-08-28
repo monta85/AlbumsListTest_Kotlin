@@ -3,6 +3,7 @@ package com.android.albumslist.service
 import android.util.Log
 import com.android.albumslist.BuildConfig
 import com.android.albumslist.model.Album
+import com.android.albumslist.model.Photo
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -45,16 +46,48 @@ fun requestAlbumList(
     )
 }
 
+/**
+ * Get all the Photo List
+ */
+fun requestPhotoList(
+        service: AlbumListService,
+        onSuccess: (photoLists: List<Photo>) -> Unit,
+        onError: (error: String) -> Unit) {
+
+    service.getPhotoLists().enqueue(
+            object : Callback<List<Photo>> {
+                override fun onFailure(call: Call<List<Photo>>?, throwable: Throwable) {
+                    Log.e(TAG, "fail to get data", throwable)
+                    onError(throwable.message ?: "unknown error")
+                }
+
+                override fun onResponse(
+                        call: Call<List<Photo>>?,
+                        response: Response<List<Photo>>
+                ) {
+                    Log.d(TAG, "got a response $response")
+                    if (response.isSuccessful) {
+                        val albumLists = response.body() ?: emptyList()
+                        onSuccess(albumLists)
+                    } else {
+                        onError(response.errorBody()?.string() ?: "Unknown error")
+                    }
+                }
+            }
+    )
+}
 interface AlbumListService{
 
     /**
      * Get album list.
      */
-    @GET("img/shared/technical-test.json")
+    @GET("photos")
+    fun getPhotoLists(): Call<List<Photo>>
+    @GET("albums")
     fun getAlbumLists(): Call<List<Album>>
 
     companion object {
-        private const val BASE_URL = "https://static.leboncoin.fr"
+        private const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 
         fun create(): AlbumListService {
             val logger = HttpLoggingInterceptor()

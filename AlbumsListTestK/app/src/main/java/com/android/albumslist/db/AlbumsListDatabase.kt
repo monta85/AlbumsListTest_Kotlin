@@ -5,12 +5,13 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import com.android.albumslist.model.Album
+import com.android.albumslist.model.Photo
 
 /**
  * Database to store all album List
  */
 @Database(
-        entities = [Album::class],
+        entities = [Album::class, Photo::class],
         version = 1,
         exportSchema = false
 )

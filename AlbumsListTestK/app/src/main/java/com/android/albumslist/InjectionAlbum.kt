@@ -15,6 +15,11 @@ object InjectionAlbum{
         return AlbumsListRepository(AlbumListService.create(), database.albumListDao(), Executors.newSingleThreadExecutor())
     }
 
+    private fun providePhotoListRepo(context: Context): AlbumsListRepository {
+        val database = AlbumsListDatabase.getInstance(context)
+        return AlbumsListRepository(AlbumListService.create(), database.albumListDao(), Executors.newSingleThreadExecutor())
+    }
+
     fun provideViewModelFactoryAlbumList(context: Context): ViewModelProvider.Factory {
         return ViewModelFactoryAlbumList(provideAlbumListRepo(context))
     }

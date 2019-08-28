@@ -8,21 +8,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.android.albumslist.R
 import com.android.albumslist.model.Album
+import com.android.albumslist.model.Photo
 import com.bumptech.glide.Glide
 
 class AlbumViewHolder(view: View)  : RecyclerView.ViewHolder(view) {
     private val albumName: TextView = view.findViewById(R.id.textViewAlbum)
     private val albumImage: ImageView = view.findViewById(R.id.imageViewAlbum)
 
-    fun bind(album: Album?) {
-        if (album != null) {
-            showAlbumListData(album)
+    fun bind(photo: Photo?) {
+        if (photo != null) {
+            showAlbumListData(photo)
         }
     }
 
-    private fun showAlbumListData(album: Album) {
-        album.apply {
-            albumName.text = name
+    private fun showAlbumListData(photo: Photo) {
+        photo.apply {
+            albumName.text = albumId.toString()
 
             Glide.with(itemView.context)
                     .load(thumbnailUrl)

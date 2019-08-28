@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "album_list")
 data class Album(@PrimaryKey @field:SerializedName("id") val albumId: Int,
-                 @field:SerializedName("title") val name: String = "",
-                 @field:SerializedName("url") val url: String = "",
-                 @field:SerializedName("thumbnailUrl") val thumbnailUrl: String = "")
+                 @field:SerializedName("title") val name: String = "")
+
+                 //@field:SerializedName("url") val url: String = "",
+                 //@field:SerializedName("thumbnailUrl") val thumbnailUrl: String = "")
+                // val childrenPhoto : List<Photo>)
